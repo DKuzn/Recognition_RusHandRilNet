@@ -25,6 +25,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -37,7 +38,7 @@
       <option name="presentableId" value="Default" />
       <updated>1588587324763</updated>
       <workItem from="1588587326731" duration="3791000" />
-      <workItem from="1588593225683" duration="2836000" />
+      <workItem from="1588593225683" duration="3147000" />
     </task>
     <task id="LOCAL-00001" summary="small correction">
       <created>1588589422466</created>
@@ -88,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588594797078</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="delete venv">
+      <created>1588596144245</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1588596144245</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -110,15 +118,15 @@
     <MESSAGE value="small correction" />
     <MESSAGE value="renamed main file" />
     <MESSAGE value="small modifed" />
-    <MESSAGE value="delete venv" />
     <MESSAGE value="delete .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete .gitignore" />
+    <MESSAGE value="delete venv" />
+    <option name="LAST_COMMIT_MESSAGE" value="delete venv" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="459" y="36" width="991" height="1030" key="CommitChangelistDialog2" timestamp="1588594797033">
+    <state x="459" y="36" width="991" height="1030" key="CommitChangelistDialog2" timestamp="1588596143181">
       <screen x="0" y="24" width="1920" height="1056" />
     </state>
-    <state x="459" y="36" width="991" height="1030" key="CommitChangelistDialog2/0.24.1920.1056@0.24.1920.1056" timestamp="1588594797033" />
+    <state x="459" y="36" width="991" height="1030" key="CommitChangelistDialog2/0.24.1920.1056@0.24.1920.1056" timestamp="1588596143181" />
     <state x="100" y="124" width="1720" height="856" key="DiffContextDialog" timestamp="1588594629191">
       <screen x="0" y="24" width="1920" height="1056" />
     </state>
@@ -139,10 +147,14 @@
       <screen x="0" y="24" width="1920" height="1056" />
     </state>
     <state width="1872" height="268" key="GridCell.Tab.0.right/0.24.1920.1056@0.24.1920.1056" timestamp="1588588221479" />
-    <state x="555" y="288" width="800" height="526" key="Vcs.Push.Dialog.v2" timestamp="1588594952403">
+    <state x="441" y="187" key="SettingsEditor" timestamp="1588596377363">
       <screen x="0" y="24" width="1920" height="1056" />
     </state>
-    <state x="555" y="288" width="800" height="526" key="Vcs.Push.Dialog.v2/0.24.1920.1056@0.24.1920.1056" timestamp="1588594952403" />
+    <state x="441" y="187" key="SettingsEditor/0.24.1920.1056@0.24.1920.1056" timestamp="1588596377363" />
+    <state x="555" y="288" width="800" height="526" key="Vcs.Push.Dialog.v2" timestamp="1588596166726">
+      <screen x="0" y="24" width="1920" height="1056" />
+    </state>
+    <state x="555" y="288" width="800" height="526" key="Vcs.Push.Dialog.v2/0.24.1920.1056@0.24.1920.1056" timestamp="1588596166726" />
     <state x="82" y="114" width="1720" height="856" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1588595659665">
       <screen x="0" y="24" width="1920" height="1056" />
     </state>
