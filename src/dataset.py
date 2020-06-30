@@ -7,7 +7,7 @@ class Dataset:
     def __init__(self):
         self.AUTOTUNE = tf.data.experimental.AUTOTUNE
         self.BATCH_SIZE = None
-        self.data_root_orig = '/home/dmitry/PycharmProjects/Recognition_RusHandRilNet/Dataset'
+        self.data_root_orig = '/content/Recognition_RusHandRilNet/Dataset'
         self.data_root = pathlib.Path(self.data_root_orig)
         self.all_image_paths = self.__image_paths()
         self.image_count = len(self.all_image_paths)
