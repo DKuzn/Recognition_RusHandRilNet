@@ -63,5 +63,5 @@ def find_letters_edges(img):
     view_image(img, 'img')
 
 
-img = cv.imread('crop8.jpg')
+img = cv.imread('../src/crop8.jpg')
 find_letters_edges(img)
