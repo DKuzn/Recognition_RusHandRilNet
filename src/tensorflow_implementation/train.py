@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import tensorflow as tf
 import os
 import json
-from dataset import Dataset
-from model import load_model
+from tensorflow_implementation.dataset import Dataset
+from tensorflow_implementation.model import load_model
 
 
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
@@ -12,7 +12,7 @@ tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 
 def train_function(train_ds, test_ds, epochs=100, steps=2325, val_steps=930):
-    model = load_model('../model/R2HandRilNet.json')
+    model = load_model('../../model/R2HandRilNet.json')
 
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001,
                                                      beta_1=0.9,
@@ -23,7 +23,7 @@ def train_function(train_ds, test_ds, epochs=100, steps=2325, val_steps=930):
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   metrics=['accuracy'])
 
-    checkpoint = tf.keras.callbacks.ModelCheckpoint('../model/weights/best.h5',
+    checkpoint = tf.keras.callbacks.ModelCheckpoint('../../model/weights/best.h5',
                                                     monitor='val_loss',
                                                     verbose=1,
                                                     save_weights_only=True,
@@ -31,8 +31,8 @@ def train_function(train_ds, test_ds, epochs=100, steps=2325, val_steps=930):
                                                     mode='min',
                                                     save_freq='epoch')
 
-    checkpoint_path = '../model/weights/last.h5'
-    train_plot_path = '../model/train_plot.json'
+    checkpoint_path = '../../model/weights/last.h5'
+    train_plot_path = '../../model/train_plot.json'
 
     if os.path.exists(checkpoint_path):
         model.load_weights(checkpoint_path)
@@ -63,6 +63,6 @@ def train_function(train_ds, test_ds, epochs=100, steps=2325, val_steps=930):
 if __name__ == '__main__':
     BATCH_SIZE = 100
 
-    train_dataset = Dataset('../R2HandRilDataset/Train', BATCH_SIZE).load_data()
-    test_dataset = Dataset('../R2HandRilDataset/Test', BATCH_SIZE).load_data()
+    train_dataset = Dataset('../../R2HandRilDataset/Train', BATCH_SIZE).load_data()
+    test_dataset = Dataset('../../R2HandRilDataset/Test', BATCH_SIZE).load_data()
     train_function(train_dataset, test_dataset, 10)

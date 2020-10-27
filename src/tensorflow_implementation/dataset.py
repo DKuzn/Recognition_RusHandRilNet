@@ -19,8 +19,11 @@ class Dataset:
         rd.shuffle(image_paths)
         return image_paths
 
+    def get_labels(self):
+        return sorted(item.name for item in self.__data_root.glob('*/') if item.is_dir())
+
     def __get_image_labels(self):
-        label_names = sorted(item.name for item in self.__data_root.glob('*/') if item.is_dir())
+        label_names = self.get_labels()
         label_to_index = dict((name, index) for index, name in enumerate(label_names))
         all_image_labels = [label_to_index[pathlib.Path(path).parent.name]
                             for path in self.__all_image_paths]

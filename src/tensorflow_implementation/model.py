@@ -5,7 +5,7 @@ import tensorflow as tf
 
 def save_model(model):
     model_json = model.to_json()
-    with open("../model/R2HandRilNet.json", "w") as json_file:
+    with open("../../model/R2HandRilNet.json", "w") as json_file:
         json_file.write(model_json)
 
 
