@@ -3,6 +3,7 @@ import random
 import json
 import numpy as np
 import os
+import time
 from torch_implementation.dataset_torch import R2HandRilDataset
 from torch_implementation.R2HandRilNet import R2HandRilNet
 
@@ -15,7 +16,7 @@ torch.backends.cudnn.deterministic = True
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
-def train(x_train, y_train, x_test, y_test, epochs=100, batch_size=100):
+def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100):
     model = R2HandRilNet()
 
     checkpoint_best = '../model/weights/best_weights.pt'
@@ -36,6 +37,7 @@ def train(x_train, y_train, x_test, y_test, epochs=100, batch_size=100):
     test_loss_history = []
 
     less_loss = 1e+10
+    start_time = time.time()
 
     for epoch in range(epochs):
         train_loss = 0
@@ -94,27 +96,35 @@ def train(x_train, y_train, x_test, y_test, epochs=100, batch_size=100):
                                                              round(float(test_accuracy), 4)))
 
     torch.save(model.state_dict(), checkpoint_last)
+    end_time = time.time()
+    learn_time = (end_time - start_time) / 3600
+    print('Time to learn: ', learn_time, 'hours')
 
     if os.path.exists(train_plot_path):
         out_result = json.load(open(train_plot_path, 'r'))
     else:
-        out_result = [[], [], [], []]
+        out_result = {'train_accuracy': [],
+                      'test_accuracy': [],
+                      'train_loss': [],
+                      'test_loss': [],
+                      'training_time': 0}
 
-    out_result[0] += train_accuracy_history
-    out_result[1] += test_accuracy_history
-    out_result[2] += train_loss_history
-    out_result[3] += test_loss_history
+    out_result['train_accuracy'] += train_accuracy_history
+    out_result['test_accuracy'] += test_accuracy_history
+    out_result['train_loss'] += train_loss_history
+    out_result['test_loss'] += test_loss_history
+    out_result['training_time'] += learn_time
     with open(train_plot_path, 'w') as f:
         json.dump(out_result, f)
 
 
 if __name__ == '__main__':
-    train_ds = R2HandRilDataset('../R2HandRilDataset/Train')
-    test_ds = R2HandRilDataset('../R2HandRilDataset/Test')
+    train_ds = R2HandRilDataset('../Dataset/Train')
+    test_ds = R2HandRilDataset('../Dataset/Test')
 
     x_train = train_ds.data()
     y_train = train_ds.targets()
     x_test = test_ds.data()
     y_test = test_ds.targets()
 
-    train(x_train, y_train, x_test, y_test)
+    train_function(x_train, y_train, x_test, y_test)
