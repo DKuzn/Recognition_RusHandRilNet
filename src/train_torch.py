@@ -4,8 +4,8 @@ import json
 import numpy as np
 import os
 import time
-from torch_implementation.dataset_torch import R2HandRilDataset
-from torch_implementation.R2HandRilNet import R2HandRilNet
+from dataset_torch import R2HandRilDataset
+from R2HandRilNet import R2HandRilNet
 
 random.seed(0)
 np.random.seed(0)
