@@ -4,7 +4,7 @@ import json
 import numpy as np
 import os
 import time
-from dataset_torch import R2HandRilDataset
+from R2HandRilDataset import R2HandRilDataset
 from R2HandRilNet import R2HandRilNet
 
 random.seed(0)
@@ -19,8 +19,8 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100):
     model = R2HandRilNet()
 
-    checkpoint_best = '../model/weights/best_weights.pt'
-    checkpoint_last = '../model/weights/last_weights.pt'
+    checkpoint_best = 'weights/best_weights.pt'
+    checkpoint_last = 'weights/last_weights.pt'
     train_plot_path = '../log/train_plot.json'
 
     model = model.to(device)
