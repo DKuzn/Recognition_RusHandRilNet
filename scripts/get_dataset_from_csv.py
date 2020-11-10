@@ -28,7 +28,7 @@ test_dir = '../Dataset/Test'
 
 
 def get_dataset(csv_path: str):
-    labels_open = open('labels', 'r')
+    labels_open = open('../r2handrilnet/labels', 'r')
     labels_open = labels_open.read().split('\n')
     labels_open = [i.split(' ') for i in labels_open]
     labels = {}
