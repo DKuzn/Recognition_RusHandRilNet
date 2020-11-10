@@ -1,4 +1,4 @@
-# detect.py
+# prediction.py
 #
 # Copyright 2020 Дмитрий Кузнецов
 #
@@ -17,17 +17,17 @@
 
 import torch
 import numpy as np
-from R2HandRilNet import R2HandRilNet
+from .R2HandRilNet import R2HandRilNet
 from PIL import Image
 import PIL.ImageOps
 
 model = R2HandRilNet()
-model.load_state_dict(torch.load('weights/R2HandRilNet.pt'))
+model.load_state_dict(torch.load('r2handrilnet/weights/R2HandRilNet.pt'))
 model.eval()
 
 
-def detect_letter(image):
-    image.convert('L')
+def predict_letter(image):
+    image = image.convert('L')
     image = PIL.ImageOps.invert(image)
     image = image.resize((28, 28), Image.ANTIALIAS)
     image = np.array(image)

@@ -1,4 +1,4 @@
-# train.py
+# train_function.py
 #
 # Copyright 2020 Дмитрий Кузнецов
 #
@@ -21,8 +21,7 @@ import json
 import numpy as np
 import os
 import time
-from R2HandRilDataset import R2HandRilDataset
-from R2HandRilNet import R2HandRilNet
+from .R2HandRilNet import R2HandRilNet
 
 random.seed(0)
 np.random.seed(0)
@@ -133,15 +132,3 @@ def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100)
     out_result['training_time'] += learn_time
     with open(train_plot_path, 'w') as f:
         json.dump(out_result, f)
-
-
-if __name__ == '__main__':
-    train_ds = R2HandRilDataset('../Dataset/Train')
-    test_ds = R2HandRilDataset('../Dataset/Test')
-
-    x_train = train_ds.data()
-    y_train = train_ds.targets()
-    x_test = test_ds.data()
-    y_test = test_ds.targets()
-
-    train_function(x_train, y_train, x_test, y_test)
