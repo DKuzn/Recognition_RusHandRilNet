@@ -21,7 +21,7 @@ import json
 import numpy as np
 import os
 import time
-from .R2HandRilNet import R2HandRilNet
+from .R2HandRilNet import R2HandRilNet, LesserR2HandRilNet
 
 random.seed(0)
 np.random.seed(0)
@@ -32,11 +32,14 @@ torch.backends.cudnn.deterministic = True
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
-def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100):
-    model = R2HandRilNet()
+def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100, net='main'):
+    if net == 'main':
+        model = R2HandRilNet()
+    else:
+        model = LesserR2HandRilNet()
 
-    checkpoint_best = 'weights/best_weights.pt'
-    checkpoint_last = 'weights/last_weights.pt'
+    checkpoint_best = '../r2handrilnet/weights/best_weights.pt'
+    checkpoint_last = '../r2handrilnet/weights/last_weights.pt'
     train_plot_path = '../log/train_plot.json'
 
     model = model.to(device)
