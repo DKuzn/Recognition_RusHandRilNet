@@ -21,7 +21,7 @@ import json
 import numpy as np
 import os
 import time
-from .R2HandRilNet import R2HandRilNet, LesserR2HandRilNet
+from .R2HandRilNet import R2HandRilNet, LesserR2HandRilNet, LeakyR2HandRilNet
 
 random.seed(0)
 np.random.seed(0)
@@ -35,6 +35,8 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100, net='main'):
     if net == 'main':
         model = R2HandRilNet()
+    elif net == 'leaky':
+        model = LeakyR2HandRilNet()
     else:
         model = LesserR2HandRilNet()
 
