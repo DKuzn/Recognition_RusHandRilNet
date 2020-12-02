@@ -17,23 +17,28 @@
 
 import torch
 import numpy as np
-from .R2HandRilNet import R2HandRilNet
+from .R2HandRilNet import R2HandRilNet, LesserR2HandRilNet
 from PIL import Image
 import PIL.ImageOps
 
-model = R2HandRilNet()
-model.load_state_dict(torch.load('r2handrilnet/weights/R2HandRilNet.pt'))
-model.eval()
 
-
-def predict_letter(image):
+def predict_letter(image, invert=True, net='main'):
+    if net == 'main':
+        model = R2HandRilNet()
+        model.load_state_dict(torch.load('r2handrilnet/weights/R2HandRilNet.pt'))
+    else:
+        model = LesserR2HandRilNet()
+        model.load_state_dict(torch.load('r2handrilnet/weights/LesserR2HandRilNet.pt'))
+    model.eval()
     image = image.convert('L')
-    image = PIL.ImageOps.invert(image)
+    if invert:
+        image = PIL.ImageOps.invert(image)
     image = image.resize((28, 28), Image.ANTIALIAS)
     image = np.array(image)
     image = np.expand_dims(image, axis=(0, 1))
     img_tensor = torch.tensor(image).float()
-    pred = model(img_tensor)
+    with torch.no_grad():
+        pred = model(img_tensor)
     prob = torch.nn.Softmax(dim=1)(pred)
     class_index = int(prob.argmax(dim=1))
     class_prob = float(prob[0][class_index])
