@@ -17,7 +17,7 @@
 
 import torch
 import numpy as np
-from .R2HandRilNet import R2HandRilNet, LesserR2HandRilNet, LeakyR2HandRilNet
+from .R2HandRilNet import R2HandRilNet, LesserR2HandRilNet, LeakyR2HandRilNet, BnormR2HandRilNet
 from PIL import Image
 import PIL.ImageOps
 
@@ -29,6 +29,9 @@ def predict_letter(image, invert=True, net='main'):
     elif net == 'leaky':
         model = LeakyR2HandRilNet()
         model.load_state_dict(torch.load('r2handrilnet/weights/LeakyR2HandRilNet.pt'))
+    elif net == 'bnorm':
+        model = BnormR2HandRilNet()
+        model.load_state_dict(torch.load('r2handrilnet/weights/BnormR2HandRilNet.pt'))
     else:
         model = LesserR2HandRilNet()
         model.load_state_dict(torch.load('r2handrilnet/weights/LesserR2HandRilNet.pt'))
