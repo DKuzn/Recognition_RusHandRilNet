@@ -21,7 +21,7 @@ import json
 import numpy as np
 import os
 import time
-from .R2HandRilNet import R2HandRilNet, LesserR2HandRilNet, LeakyR2HandRilNet
+from .R2HandRilNet import R2HandRilNet, LesserR2HandRilNet, LeakyR2HandRilNet, BnormR2HandRilNet
 
 random.seed(0)
 np.random.seed(0)
@@ -37,6 +37,8 @@ def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100,
         model = R2HandRilNet()
     elif net == 'leaky':
         model = LeakyR2HandRilNet()
+    elif net == 'bnorm':
+        model = BnormR2HandRilNet()
     else:
         model = LesserR2HandRilNet()
 
@@ -61,8 +63,8 @@ def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100,
     start_time = time.time()
 
     for epoch in range(epochs):
-        train_loss = 0
-        train_accuracy = 0
+        train_loss = 0.0
+        train_accuracy = 0.0
 
         order = np.random.permutation(len(x_train))
         for start_index in range(0, len(x_train), batch_size):
@@ -74,20 +76,23 @@ def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100,
             y_batch = y_train[batch_indexes].to(device)
 
             preds = model.forward(x_batch)
-            train_accuracy = (preds.argmax(dim=1) == y_batch).float().mean().data.cpu()
+            train_accuracy += (preds.argmax(dim=1) == y_batch).float().mean().data.cpu()
 
             loss_value = loss_function(preds, y_batch)
-            train_loss = loss_value
+            train_loss += loss_value
 
             loss_value.backward()
 
             optimizer.step()
 
+        train_loss /= len(x_train) / batch_size
+        train_accuracy /= len(x_train) / batch_size
+
         train_accuracy_history.append(float(train_accuracy))
         train_loss_history.append(float(train_loss))
 
-        test_loss = 0
-        test_accuracy = 0
+        test_loss = 0.0
+        test_accuracy = 0.0
 
         for start_index in range(0, len(x_test), batch_size):
 
@@ -96,8 +101,11 @@ def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100,
 
             test_preds = model.forward(x_test_batch)
 
-            test_accuracy = (test_preds.argmax(dim=1) == y_test_batch).float().mean().data.cpu()
-            test_loss = loss_function(test_preds, y_test_batch).data.cpu()
+            test_accuracy += (test_preds.argmax(dim=1) == y_test_batch).float().mean().data.cpu()
+            test_loss += loss_function(test_preds, y_test_batch).data.cpu()
+
+        test_loss /= len(x_test) / batch_size
+        test_accuracy /= len(x_test) / batch_size
 
         if test_loss < less_loss:
             torch.save(model.state_dict(), checkpoint_best)
@@ -109,7 +117,7 @@ def train_function(x_train, y_train, x_test, y_test, epochs=100, batch_size=100,
         test_loss_history.append(float(test_loss))
         test_accuracy_history.append(float(test_accuracy))
 
-        print('Epoch {0}/{1} - train_loss: {2} - train_accuracy: {3} ' \
+        print('Epoch {0}/{1} - train_loss: {2} - train_accuracy: {3} '
               '- test_loss: {4} - test_accuracy: {5}'.format(epoch + 1, epochs,
                                                              round(float(train_loss), 4),
                                                              round(float(train_accuracy), 4),
